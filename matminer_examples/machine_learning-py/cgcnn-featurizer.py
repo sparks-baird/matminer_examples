@@ -1,4 +1,3 @@
-import os
 from shutil import copyfile
 import pandas as pd
 import numpy as np
@@ -20,8 +19,13 @@ df = pd.DataFrame({"K_VRH": properties[1], "structure": structures})
 print(df) # make sure the dataframe appears like you intended
 df.to_pickle("C:/Users/sterg/Documents/GitHub/cgcnn/data/cif-K_VRH.p")
 
-featurizer = CGCNNFeaturizer(task='regression', atom_init_fea=None, pretrained_name='bulk-moduli', warm_start_file=None, warm_start_latest=False, save_model_to_dir=None, save_checkpoint_to_dir=None, checkpoint_interval=100, del_checkpoint=True)
+#%%
+featurizer = CGCNNFeaturizer(task='regression', atom_init_fea=None, pretrained_name='bulk-moduli', warm_start_file='C:\\Users\\sterg\\Documents\\GitHub\\cgcnn\\data\\checkpoint.pth.tar', warm_start_latest=False, save_model_to_dir=None, save_checkpoint_to_dir=None, checkpoint_interval=100, del_checkpoint=True)
 
+#%%
+featurizer.fit(df.structure,df.K_VRH)
+
+#%%
 df.structure[0]
 
 features = featurizer.featurize_many(df.structure,ignore_errors=True,return_errors=False,pbar=True)
